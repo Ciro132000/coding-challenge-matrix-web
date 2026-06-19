@@ -18,7 +18,7 @@ export function LoginPage() {
         try {
             const response = await service.login(email, password);
             login(response.token);
-            navigate('/products');
+            navigate('/matrix');
         } catch {
             setError('Credenciales inválidas');
         }
