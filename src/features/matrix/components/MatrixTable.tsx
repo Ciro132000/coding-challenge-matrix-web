@@ -4,33 +4,25 @@ type Props = {
 };
 
 export function MatrixTable({ title, matrix }: Props) {
+  const cols = matrix[0]?.length || 0;
+
   return (
-    <div style={{ marginBottom: 24 }}>
+    <div className="matrix-table-wrapper">
       <h3>{title}</h3>
 
-      <div
-        style={{
-          display: 'inline-block',
-          border: '1px solid #ccc',
-          padding: 8,
-        }}
+      <div 
+        className="matrix-table"
+        style={{ gridTemplateColumns: `repeat(${cols}, max-content)` }}
       >
         {matrix.map((row, i) => (
           <div
             key={i}
-            style={{ display: 'flex' }}
+            className="matrix-table-row"
           >
             {row.map((cell, j) => (
               <div
                 key={j}
-                style={{
-                  // width: 40,
-                  // height: 40,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  border: '1px solid #ddd',
-                }}
+                className="matrix-table-cell"
               >
                 {cell}
               </div>

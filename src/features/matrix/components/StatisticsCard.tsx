@@ -9,24 +9,17 @@ export function StatisticsCard({ title, stats }: Props) {
   if (!stats) return null;
 
   return (
-    <div
-      style={{
-        border: '1px solid #ddd',
-        padding: 12,
-        borderRadius: 8,
-        marginBottom: 12,
-      }}
-    >
+    <div className="statistics-card">
       <h4>{title}</h4>
 
-      <ul style={{ margin: 0, paddingLeft: 16 }}>
-        <li>Max: {stats.max}</li>
-        <li>Min: {stats.min}</li>
-        <li>Average: {stats.average}</li>
-        <li>Sum: {stats.sum}</li>
+      <ul className="statistics-list">
+        <li><span>Valor máximo:</span> <span>{stats.max}</span></li>
+        <li><span>Valor mínimo:</span> <span>{stats.min}</span></li>
+        <li><span>Promedio:</span> <span>{stats.average}</span></li>
+        <li><span>Suma total:</span> <span>{stats.sum}</span></li>
         <li>
-          Diagonal:{' '}
-          {stats.isDiagonal ? 'Yes' : 'No'}
+          <span>Matriz diagonal:</span>
+          <span>{stats.isDiagonal ? 'Yes' : 'No'}</span>
         </li>
       </ul>
     </div>

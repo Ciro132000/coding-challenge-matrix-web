@@ -2,74 +2,72 @@ import { useMatrixSend } from './hooks/useMatrixSend';
 import { MatrixForm } from './components/MatrixForm';
 import { MatrixTable } from './components/MatrixTable';
 import { StatisticsCard } from './components/StatisticsCard';
+import { LogoutButton } from '../../shared/LogoutButton';
 
 export function MatrixPage() {
-  const { mutate, data, isPending, error } = useMatrixSend();
+  const { mutate, data, isPending, error, reset } = useMatrixSend();
 
   const handleSubmit = (matrix: number[][]) => {
     mutate({ matrix });
   };
 
   return (
-    <div style={{ padding: 24 }}>
-      <h1>QR Matrix Processor</h1>
+    <div className="matrix-page">
+      <div className='flex justify-between mb-4'>
+        <h1>QR Matrix Processor</h1>
+        <LogoutButton/>
+      </div>
 
       <MatrixForm
         // value={matrixText}
         // onChange={setMatrixText}
         onSubmit={handleSubmit}
+        onClear={reset}
         // loading={isPending}
         isLoading={isPending}
       />
 
       {error && (
-        <p style={{ color: 'red' }}>
+        <p className="error-text">
           Error: {error.message}
         </p>
       )}
 
       {data && (
-        <div style={{ marginTop: 30 }}>
-          <h2>Resultados</h2>
+        <div >
+          <h2 className='text-center'>Resultados</h2>
 
           {/* MATRICES */}
           <MatrixTable
-            title="Rotated Matrix"
+            title="Matriz Rotada"
             matrix={data.rotatedMatrix}
           />
 
           <MatrixTable
-            title="Q Matrix"
+            title="Q Matriz"
             matrix={data.q}
           />
 
           <MatrixTable
-            title="R Matrix"
+            title="R Matriz"
             matrix={data.r}
           />
 
-          {/* STATISTICS */}
-          <h3>Statistics</h3>
+          <h3 className='text-center'>Estadísticas</h3>
 
-          <div
-            style={{
-              display: 'grid',
-              gap: 12,
-              maxWidth: 600,
-            }}
-          >
+          <div className="statistics-grid">
             <StatisticsCard
-              title="Rotated Matrix"
+              title="Matriz Rotada"
               stats={data.statistics.rotatedMatrix}
             />
 
             <StatisticsCard
-              title="Q Matrix"
+              title="Q Matriz"
               stats={data.statistics.q}
             />
 
             <StatisticsCard
-              title="R Matrix"
+              title="R Matriz"
               stats={data.statistics.r}
             />
           </div>

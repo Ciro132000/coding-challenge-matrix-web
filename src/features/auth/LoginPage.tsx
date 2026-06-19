@@ -328,7 +328,7 @@ export function LoginPage() {
                         lineHeight: 1.5,
                     }}
                 >
-                    Productos
+                    Matrices
                 </p>
             </form>
         </div>
