@@ -26,8 +26,7 @@ export function AuthProvider({
         isAuthenticated,
         setIsAuthenticated,
     ] = useState(() => {
-        // return !!TokenStorage.get();
-        return true;
+        return !!TokenStorage.get();
     });
 
     const login = (

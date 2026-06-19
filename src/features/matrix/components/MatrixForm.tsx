@@ -4,11 +4,13 @@ type MatrixValue = number | '';
 
 interface MatrixFormProps {
     onSubmit: (matrix: number[][]) => void;
+    onClear?: () => void;
     isLoading?: boolean;
 }
 
 export function MatrixForm({
     onSubmit,
+    onClear,
     isLoading = false,
 }: MatrixFormProps) {
 
@@ -81,6 +83,18 @@ export function MatrixForm({
         setMatrix(updatedMatrix);
     };
 
+    const handleClear = () => {
+        setError('');
+        if (rows !== '' && cols !== '') {
+            generateMatrix(Number(rows), Number(cols));
+        } else {
+            setMatrix([]);
+        }
+        if (onClear) {
+            onClear();
+        }
+    };
+
     const handleSubmit = () => {
 
         setError('');
@@ -122,20 +136,13 @@ export function MatrixForm({
     };
 
     return (
-        <div>
+        <div className="matrix-form-container">
 
-            <h2>
+            <h2 className='flex justify-center'>
                 Generar matriz
             </h2>
 
-            <div
-                style={{
-                    display: 'flex',
-                    gap: '10px',
-                    alignItems: 'center',
-                    marginBottom: '20px',
-                }}
-            >
+            <div className="matrix-size-inputs flex justify-center">
 
                 <input
                     type="number"
@@ -143,6 +150,7 @@ export function MatrixForm({
                     placeholder="Filas"
                     value={rows}
                     disabled={isLoading}
+                    className="matrix-input"
                     onChange={e =>
                         handleRowsChange(
                             Number(e.target.value),
@@ -158,6 +166,7 @@ export function MatrixForm({
                     placeholder="Columnas"
                     value={cols}
                     disabled={isLoading}
+                    className="matrix-input"
                     onChange={e =>
                         handleColsChange(
                             Number(e.target.value),
@@ -167,84 +176,83 @@ export function MatrixForm({
 
             </div>
 
-            <div>
+            <div className='flex justify-center'>
+                <div className={matrix.length > 0 ? "matrix-grid-container" : ""}>
 
-                {matrix.map(
-                    (
-                        row,
-                        rowIndex,
-                    ) => (
+                    {matrix.map(
+                        (
+                            row,
+                            rowIndex,
+                        ) => (
 
-                        <div
-                            key={rowIndex}
-                            style={{
-                                display: 'flex',
-                                gap: '8px',
-                                marginBottom: '8px',
-                            }}
-                        >
+                            <div
+                                key={rowIndex}
+                                className="matrix-row"
+                            >
 
-                            {row.map(
-                                (
-                                    cell,
-                                    colIndex,
-                                ) => (
+                                {row.map(
+                                    (
+                                        cell,
+                                        colIndex,
+                                    ) => (
 
-                                    <input
-                                        key={`${rowIndex}-${colIndex}`}
-                                        type="number"
-                                        value={cell}
-                                        disabled={isLoading}
-                                        onChange={e =>
-                                            handleCellChange(
-                                                rowIndex,
-                                                colIndex,
-                                                e.target.value,
-                                            )
-                                        }
-                                        style={{
-                                            width: '70px',
-                                        }}
-                                    />
+                                        <input
+                                            key={`${rowIndex}-${colIndex}`}
+                                            type="number"
+                                            value={cell}
+                                            disabled={isLoading}
+                                            className="matrix-cell-input"
+                                            onChange={e =>
+                                                handleCellChange(
+                                                    rowIndex,
+                                                    colIndex,
+                                                    e.target.value,
+                                                )
+                                            }
+                                        />
 
-                                ),
-                            )}
+                                    ),
+                                )}
 
-                        </div>
+                            </div>
 
-                    ),
-                )}
+                        ),
+                    )}
 
+                </div>
             </div>
 
             {error && (
 
-                <p
-                    style={{
-                        color: 'red',
-                        marginTop: '16px',
-                    }}
-                >
+                <p className="error-text">
                     {error}
                 </p>
 
             )}
 
-            <button
-                type="button"
-                disabled={
-                    isLoading ||
-                    matrix.length === 0
-                }
-                onClick={handleSubmit}
-                style={{
-                    marginTop: '20px',
-                }}
-            >
-                {isLoading
-                    ? 'Calculando...'
-                    : 'Calcular'}
-            </button>
+            <div className='flex justify-center gap-4'>
+                <button
+                    type="button"
+                    className="btn-secondary"
+                    disabled={isLoading}
+                    onClick={handleClear}
+                >
+                    Limpiar
+                </button>
+                <button
+                    type="button"
+                    className="btn-primary"
+                    disabled={
+                        isLoading ||
+                        matrix.length === 0
+                    }
+                    onClick={handleSubmit}
+                >
+                    {isLoading
+                        ? 'Calculando...'
+                        : 'Calcular'}
+                </button>
+            </div>
 
         </div>
     );
