@@ -16,6 +16,7 @@ export function LoginPage() {
         e.preventDefault();
         setError('');
         try {
+            // El login delega la autenticación al datasource y guarda el JWT recibido.
             const response = await service.login(email, password);
             login(response.token);
             navigate('/matrix');
@@ -37,7 +38,6 @@ export function LoginPage() {
                 fontFamily: "'Inter', sans-serif",
             }}
         >
-            {/* Scoped focus styles */}
             <style>{`
                 .login-input:focus {
                     border-color: var(--accent-mid) !important;
@@ -55,7 +55,6 @@ export function LoginPage() {
                 }
             `}</style>
 
-            {/* Decorative background orb 1 — top-left purple */}
             <div
                 style={{
                     position: 'absolute',
@@ -70,7 +69,6 @@ export function LoginPage() {
                 }}
             />
 
-            {/* Decorative background orb 2 — bottom-right pink */}
             <div
                 style={{
                     position: 'absolute',
@@ -85,7 +83,6 @@ export function LoginPage() {
                 }}
             />
 
-            {/* Decorative background orb 3 — center-bottom accent */}
             <div
                 style={{
                     position: 'absolute',
@@ -100,7 +97,6 @@ export function LoginPage() {
                 }}
             />
 
-            {/* Glass card */}
             <form
                 onSubmit={onSubmit}
                 style={{
@@ -118,7 +114,7 @@ export function LoginPage() {
                     zIndex: 1,
                 }}
             >
-                {/* Logo area */}
+
                 <div
                     style={{
                         width: '64px',
@@ -148,7 +144,6 @@ export function LoginPage() {
                     </svg>
                 </div>
 
-                {/* Title */}
                 <h1
                     style={{
                         fontSize: '1.75rem',
@@ -163,7 +158,6 @@ export function LoginPage() {
                     Iniciar Sesión
                 </h1>
 
-                {/* Subtitle */}
                 <p
                     style={{
                         fontSize: '0.875rem',
@@ -177,7 +171,6 @@ export function LoginPage() {
                     Ingresa tus credenciales para continuar
                 </p>
 
-                {/* Email field */}
                 <div style={{ marginBottom: '20px' }}>
                     <label
                         style={{
@@ -213,7 +206,6 @@ export function LoginPage() {
                     />
                 </div>
 
-                {/* Password field */}
                 <div style={{ marginBottom: '20px' }}>
                     <label
                         style={{
@@ -250,7 +242,6 @@ export function LoginPage() {
                     />
                 </div>
 
-                {/* Error message */}
                 {error && (
                     <div
                         style={{
@@ -292,7 +283,6 @@ export function LoginPage() {
                     </div>
                 )}
 
-                {/* Submit button */}
                 <button
                     type="submit"
                     className="login-btn"
@@ -317,7 +307,6 @@ export function LoginPage() {
                     Ingresar
                 </button>
 
-                {/* Footer text */}
                 <p
                     style={{
                         color: 'var(--text-muted)',

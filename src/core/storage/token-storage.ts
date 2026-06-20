@@ -1,5 +1,6 @@
 export class TokenStorage {
 
+    // Centraliza el acceso al token.
     static get() {
         return localStorage.getItem('token');
     }

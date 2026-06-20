@@ -1,5 +1,6 @@
 export type Matrix = number[][];
 
+// Contratos compartidos entre la UI y el backend para el procesamiento QR.
 export interface QRRequest {
   matrix: Matrix;
   withStatistics: boolean;

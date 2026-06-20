@@ -5,6 +5,7 @@ type Props = {
   stats?: MatrixStatistics;
 };
 
+// Componente reutilizable para mostrar las estadisticas de las matrices.
 export function StatisticsCard({ title, stats }: Props) {
   if (!stats) return null;
 
@@ -19,7 +20,7 @@ export function StatisticsCard({ title, stats }: Props) {
         <li><span>Suma total:</span> <span>{stats.sum}</span></li>
         <li>
           <span>Matriz diagonal:</span>
-          <span>{stats.isDiagonal ? 'Yes' : 'No'}</span>
+          <span>{stats.isDiagonal ? 'Sí' : 'No'}</span>
         </li>
       </ul>
     </div>

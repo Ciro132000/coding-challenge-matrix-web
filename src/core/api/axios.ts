@@ -9,9 +9,9 @@ export const api = axios.create({
     },
 });
 
-
 api.interceptors.request.use(config => {
 
+    // Agrega el token JWT a cada request autenticado.
     const token = TokenStorage.get();
 
     if (token) {
@@ -30,6 +30,7 @@ api.interceptors.response.use(
 
     error => {
 
+        // Si el backend invalida la sesión, se limpia el token y se fuerza login.
         if (error.response?.status === 401) {
 
             TokenStorage.remove();
