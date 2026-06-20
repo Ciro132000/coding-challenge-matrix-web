@@ -7,13 +7,13 @@ import { LogoutButton } from '../../shared/LogoutButton';
 export function MatrixPage() {
   const { mutate, data, isPending, error, reset } = useMatrixSend();
 
-  const handleSubmit = (matrix: number[][]) => {
-    mutate({ matrix });
+  const handleSubmit = (matrix: number[][], withStatistics: boolean) => {
+    mutate({ matrix, withStatistics });
   };
 
   return (
     <div className="matrix-page">
-      <div className='flex justify-between mb-4'>
+      <div className='flex justify-between mb-4'style={{ width: "100%" }}>
         <h1>QR Matrix Processor</h1>
         <LogoutButton/>
       </div>

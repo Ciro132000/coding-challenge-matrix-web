@@ -2,6 +2,7 @@ export type Matrix = number[][];
 
 export interface QRRequest {
   matrix: Matrix;
+  withStatistics: boolean;
 }
 
 export interface MatrixStatistics {

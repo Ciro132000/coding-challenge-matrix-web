@@ -3,7 +3,7 @@ import { useState } from 'react';
 type MatrixValue = number | '';
 
 interface MatrixFormProps {
-    onSubmit: (matrix: number[][]) => void;
+    onSubmit: (matrix: number[][], withStatistics: boolean) => void;
     onClear?: () => void;
     isLoading?: boolean;
 }
@@ -45,6 +45,7 @@ export function MatrixForm({
     const handleRowsChange = (
         value: number,
     ) => {
+        value = value > 50 ? 50 : value;
 
         setRows(value);
 
@@ -57,6 +58,8 @@ export function MatrixForm({
     const handleColsChange = (
         value: number,
     ) => {
+
+        value = value > 50 ? 50 : value;
 
         setCols(value);
 
@@ -132,7 +135,7 @@ export function MatrixForm({
                 row.map(cell => Number(cell)),
             );
 
-        onSubmit(payload);
+        onSubmit(payload, true);
     };
 
     return (
@@ -147,6 +150,7 @@ export function MatrixForm({
                 <input
                     type="number"
                     min={1}
+                    max={50}
                     placeholder="Filas"
                     value={rows}
                     disabled={isLoading}
@@ -163,6 +167,7 @@ export function MatrixForm({
                 <input
                     type="number"
                     min={1}
+                    max={50}
                     placeholder="Columnas"
                     value={cols}
                     disabled={isLoading}
@@ -177,48 +182,50 @@ export function MatrixForm({
             </div>
 
             <div className='flex justify-center'>
-                <div className={matrix.length > 0 ? "matrix-grid-container" : ""}>
+                <div className='overflow-x-auto'>
+                    <div className={matrix.length > 0 ? "matrix-grid-container" : ""}>
 
-                    {matrix.map(
-                        (
-                            row,
-                            rowIndex,
-                        ) => (
+                        {matrix.map(
+                            (
+                                row,
+                                rowIndex,
+                            ) => (
 
-                            <div
-                                key={rowIndex}
-                                className="matrix-row"
-                            >
+                                <div
+                                    key={rowIndex}
+                                    className="matrix-row"
+                                >
 
-                                {row.map(
-                                    (
-                                        cell,
-                                        colIndex,
-                                    ) => (
+                                    {row.map(
+                                        (
+                                            cell,
+                                            colIndex,
+                                        ) => (
 
-                                        <input
-                                            key={`${rowIndex}-${colIndex}`}
-                                            type="number"
-                                            value={cell}
-                                            disabled={isLoading}
-                                            className="matrix-cell-input"
-                                            onChange={e =>
-                                                handleCellChange(
-                                                    rowIndex,
-                                                    colIndex,
-                                                    e.target.value,
-                                                )
-                                            }
-                                        />
+                                            <input
+                                                key={`${rowIndex}-${colIndex}`}
+                                                type="number"
+                                                value={cell}
+                                                disabled={isLoading}
+                                                className="matrix-cell-input"
+                                                onChange={e =>
+                                                    handleCellChange(
+                                                        rowIndex,
+                                                        colIndex,
+                                                        e.target.value,
+                                                    )
+                                                }
+                                            />
 
-                                    ),
-                                )}
+                                        ),
+                                    )}
 
-                            </div>
+                                </div>
 
-                        ),
-                    )}
+                            ),
+                        )}
 
+                    </div>
                 </div>
             </div>
 
@@ -257,172 +264,3 @@ export function MatrixForm({
         </div>
     );
 }
-
-// import { useMemo, useState, type ChangeEvent } from 'react';
-
-// type Props = {
-//   value: string;
-//   onChange: (value: string) => void;
-//   onSubmit: (matrix: number[][]) => void;
-//   loading: boolean;
-// };
-
-// function parseMatrix(input: string): number[][] {
-//   return input
-//     .trim()
-//     .split('\n')
-//     .map(row =>
-//       row.trim().split(/\s+/).map(Number)
-//     );
-// }
-
-// export function MatrixForm({
-//   value,
-//   onChange,
-//   onSubmit,
-//   loading,
-// }: Props) {
-//   const isValid = useMemo(() => {
-//     try {
-//       const matrix = parseMatrix(value);
-//       return matrix.every(row =>
-//         row.every(n => !isNaN(n))
-//       );
-//     } catch {
-//       return false;
-//     }
-//   }, [value]);
-
-//   const handleSubmit = () => {
-//     const matrix = parseMatrix(value);
-//     onSubmit(matrix);
-//   };
-
-//   const [rows, setRows] = useState(1);
-//   const [cols, setCols] = useState(2);
-//   const [matrix, setMatrix] = useState<number[][]>([]);
-
-//   const generateMatrix = (newRows: number, newCols: number) => {
-//     if (newRows <= 0 || newCols <= 0) {
-//       setMatrix([]);
-//       return;
-//     }
-
-//     const newMatrix = Array.from({ length: newRows }, () =>
-//       Array.from({ length: newCols }, () => 0)
-//     );
-
-//     setMatrix(newMatrix);
-//   };
-
-//   const handleRowsChange = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-//     const value = Number(e.target.value);
-
-//     setRows(value);
-//     generateMatrix(value, cols);
-//   };
-
-//   const handleColsChange = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-//     const value = Number(e.target.value);
-
-//     setCols(value);
-//     generateMatrix(rows, value);
-//   };
-
-//   const handleCellChange = (rowIndex: number, colIndex: number, value:string) => {
-//     const updatedMatrix = matrix.map((row) => [...row]);
-
-//     updatedMatrix[rowIndex][colIndex] =
-//       value === "" ? 0 : Number(value);
-
-//     setMatrix(updatedMatrix);
-//   };
-
-
-//   return (
-//     <div>
-
-//        <div
-//         style={{
-//           display: "flex",
-//           gap: "10px",
-//           alignItems: "center",
-//           marginBottom: "20px",
-//         }}
-//       >
-//         <input
-//           type="number"
-//           min="1"
-//           placeholder="Filas"
-//           value={rows || ""}
-//           onChange={handleRowsChange}
-//         />
-
-//         <span>x</span>
-
-//         <input
-//           type="number"
-//           min="1"
-//           placeholder="Columnas"
-//           value={cols || ""}
-//           onChange={handleColsChange}
-//         />
-//       </div>
-
-
-//         <div>
-//         {matrix.map((row, rowIndex) => (
-//           <div
-//             key={rowIndex}
-//             style={{
-//               display: "flex",
-//               gap: "8px",
-//               marginBottom: "8px",
-//             }}
-//           >
-//             {row.map((cell, colIndex) => (
-//               <input
-//                 key={`${rowIndex}-${colIndex}`}
-//                 type="number"
-//                 value={cell}
-//                 onChange={(e) =>
-//                   handleCellChange(
-//                     rowIndex,
-//                     colIndex,
-//                     e.target.value
-//                   )
-//                 }
-//                 style={{
-//                   width: "70px",
-//                 }}
-//               />
-//             ))}
-//           </div>
-//         ))}
-//       </div>
-
-
-//       <textarea
-//         rows={6}
-//         cols={40}
-//         value={value}
-//         onChange={(e) => onChange(e.target.value)}
-//       />
-
-//       <br />
-
-//       <button
-//         onClick={handleSubmit}
-//         disabled={!isValid || loading}
-//       >
-//         {loading ? 'Procesando...' : 'Enviar matriz'}
-//       </button>
-
-//       {!isValid && (
-//         <p style={{ color: 'orange' }}>
-//           Matriz inválida
-//         </p>
-//       )}
-//     </div>
-//   );
-// }
