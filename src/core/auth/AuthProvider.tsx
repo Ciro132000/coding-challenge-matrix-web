@@ -22,6 +22,7 @@ export function AuthProvider({
     children,
 }: Props) {
 
+    // El estado inicial depende del token para mantener la sesión al recargar.
     const [
         isAuthenticated,
         setIsAuthenticated,

@@ -24,6 +24,7 @@ export function MatrixForm({
         newCols: number,
     ) => {
 
+        // No se genera grilla hasta tener dimensiones válidas.
         if (newRows <= 0 || newCols <= 0) {
             setMatrix([]);
             return;
@@ -45,6 +46,7 @@ export function MatrixForm({
     const handleRowsChange = (
         value: number,
     ) => {
+        // Límite para evitar renderizar matrices demasiado grandes.
         value = value > 50 ? 50 : value;
 
         setRows(value);
@@ -59,6 +61,7 @@ export function MatrixForm({
         value: number,
     ) => {
 
+        // Límite evitar renderizar matrices demasiado grandes.
         value = value > 50 ? 50 : value;
 
         setCols(value);
@@ -135,6 +138,7 @@ export function MatrixForm({
                 row.map(cell => Number(cell)),
             );
 
+        // El componente padre decide cómo procesar el payload ya convertido a números.
         onSubmit(payload, true);
     };
 

@@ -3,6 +3,7 @@ import { api } from '../../core/api/axios';
 import type { QRRequest, QRResponse } from './types';
 
 export class MatrixDatasource {
+  // Envía la matriz al endpoint de procesamiento QR y retorna el contrato tipado.
   static async process(
     request: QRRequest,
   ): Promise<QRResponse> {

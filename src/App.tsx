@@ -15,7 +15,7 @@ function App() {
     shouldFetchServices ? 'loading' : 'success'
   );
 
-  // Funcion para levantar servicios en producción
+  // En producción se validan los servicios externos antes de renderizar la app.
   useEffect(() => {
     if(shouldFetchServices) {
       const runService = async () =>{
@@ -32,14 +32,11 @@ function App() {
 
           if (hasError) {
             setStatus('error');
-            console.log("Servicio no disponible");
           } else {
             setStatus('success');
-            console.log("Servicios ok");
           }
-        } catch (error) {
+        } catch {
           setStatus('error');
-          console.log("Servicio no disponible", error);
         }
       }
 

@@ -7,6 +7,7 @@ import { LogoutButton } from '../../shared/LogoutButton';
 export function MatrixPage() {
   const { mutate, data, isPending, error, reset } = useMatrixSend();
 
+  // Envía la matriz validada al backend y solicita estadísticas en la respuesta.
   const handleSubmit = (matrix: number[][], withStatistics: boolean) => {
     mutate({ matrix, withStatistics });
   };

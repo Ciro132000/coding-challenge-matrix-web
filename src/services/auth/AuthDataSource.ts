@@ -6,12 +6,11 @@ interface LoginResponse {
 
 export class AuthDatasource {
 
+    // Datasource encargado de traducir el login de la UI al contrato HTTP del backend.
     async login(
         email: string,
         password: string,
     ): Promise<LoginResponse> {
-
-        console.log(import.meta.env.VITE_API_URL);
 
         const { data } = await api.post('/auth/login', {
             email,

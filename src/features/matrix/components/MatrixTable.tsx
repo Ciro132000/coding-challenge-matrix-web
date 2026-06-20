@@ -3,6 +3,8 @@ type Props = {
   matrix: number[][];
 };
 
+// Componente reutilizable para generar las matrices recibidas en el calculo.
+
 export function MatrixTable({ title, matrix }: Props) {
   const cols = matrix[0]?.length || 0;
 
