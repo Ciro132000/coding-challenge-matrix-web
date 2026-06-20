@@ -44,8 +44,15 @@ export function MatrixForm({
     };
 
     const handleRowsChange = (
-        value: number,
+        inputValue: string,
     ) => {
+        if (inputValue === '') {
+            setRows('');
+            setMatrix([]);
+            return;
+        }
+
+        let value = Number(inputValue);
         // Límite para evitar renderizar matrices demasiado grandes.
         value = value > 50 ? 50 : value;
 
@@ -58,8 +65,16 @@ export function MatrixForm({
     };
 
     const handleColsChange = (
-        value: number,
+        inputValue: string,
     ) => {
+
+        if (inputValue === '') {
+            setCols('');
+            setMatrix([]);
+            return;
+        }
+
+        let value = Number(inputValue);
 
         // Límite evitar renderizar matrices demasiado grandes.
         value = value > 50 ? 50 : value;
@@ -161,7 +176,7 @@ export function MatrixForm({
                     className="matrix-input"
                     onChange={e =>
                         handleRowsChange(
-                            Number(e.target.value),
+                            e.target.value,
                         )
                     }
                 />
@@ -178,7 +193,7 @@ export function MatrixForm({
                     className="matrix-input"
                     onChange={e =>
                         handleColsChange(
-                            Number(e.target.value),
+                            e.target.value,
                         )
                     }
                 />
